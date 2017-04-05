@@ -1245,9 +1245,13 @@ paths:
         '200':
           description: Pack search results.
           schema:
-            type: array
-            items:
-              - $ref: '#/definitions/PacksList'
+            type:
+              - array
+              - object
+            # Ideally, we should return array every time and when we request a pack, it should be an
+            # array of a single element. Currently it's not the case though so we have to fallback
+            # to broader kind of scheme. Fixing this would require breaking changes to this endpoint.
+            # $ref: '#/definitions/PacksList'
           examples:
             application/json:
               ref: 'core.webhook'
@@ -2522,7 +2526,7 @@ paths:
         - name: limit
           in: query
           description: List N most recent rule enforcements.
-          type: string
+          type: integer
           default: 50
         - name: offset
           in: query
